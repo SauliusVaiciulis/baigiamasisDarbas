@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Login Register App</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+	</script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="./css/main.css">
+</head>
+<script>
+    function doMessage(form){
+    $.ajax({
+    url:"/chat/:username",
+    method:"POST",
+    data:{sender:form.sender.value, recipient:form.recipient.value, body:form.body.value,
+        _id:form._id.value},
+    success: function(response){
+    alert(response);
+        }
+    });
+    return false;
+}
+</script>
+<body>
+	<div class="col-md-4 col-md-offset-4 form-card">
+	
+
+		<div>
+			<h1><%= userName %> </h1>
+			<form method="POST" onsubmit="return doMessage(this);" class="theme-form-one">
+				<input type="hidden" name="sender" value="<%=  owner %>">
+				<input type="hidden" name="recipient" value="<%=  recip %>">
+					<div class="row">
+					 <div class="col-md-6 col-12"><input type="text" name="body" placeholder="Send a Message"></div>
+				  </div>
+				<button class="theme-button-one">Send Message</button>
+			</form>
+
+			<div>
+
+				<% messages.forEach(function (message) { %>  
+					<div>
+						   <div class="">
+							<div style="border:1px solid">
+							  <b><h4 class=>Sender: <%= message.sender %></h4></b>
+							  <p class=><%= message.body %></p>
+							  <p style="font-size: 9px;" class=>sent at: <%= message.createdAt %></p>
+							</div>
+						  </div>
+					</div>                               
+				<% }) %>
+
+			</div>
+			
+		</div>
+		<div class="abc" id="LangTable">
+			<a href="/logout">Logout</a>
+		</div>
+	</div>
+</body>
+
+</html>
